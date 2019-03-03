@@ -36,11 +36,12 @@
   </div>
 </template>
 
-
 <style>
 </style>
 
 <script>
+  import {fileDialog} from './discaccess'
+
   export default {
     name: 'lr-translate',
     data: function () {
@@ -61,7 +62,11 @@
     },
     methods: {
       onSubmit () {
-        console.log('submit!')
+        const folder = fileDialog({
+          properties: ['openDirectory'],
+          defaultPath: __dirname
+        })
+        console.log(folder)
       }
     }
   }
