@@ -12,14 +12,14 @@
           <el-form :model="formInline" label-width="120px">
             <el-row style="margin-bottom:24px;padding-bottom:24px;border-bottom: solid 1px #ddd;">
               <el-button-group >
-                <el-button type="danger" icon="el-icon-circle-check" @click="onSubmit" >Run</el-button>
+                <el-button type="danger" icon="el-icon-circle-check" ref="execBtn" @keydown="onSubmit" >Run</el-button>
               </el-button-group>
             </el-row>
             <el-form-item label="Source Folder" >
-              <el-input v-model="formInline.user" placeholder="Translated Folder" ></el-input>
+              <el-input v-model="formInline.source" placeholder="Translated Folder" @focus="srcClick" ></el-input>
             </el-form-item>
             <el-form-item label="Translated Folder" style="margin-bottom:24px;padding-bottom:24px;border-bottom: solid 1px #ddd;">
-              <el-input v-model="formInline.user" placeholder="Translated Folder"></el-input>
+              <el-input v-model="formInline.dist" placeholder="Translated Folder" @focus="distClick"></el-input>
             </el-form-item>
           </el-form>        
           <el-table :data="tableData">
@@ -55,18 +55,33 @@
         isCollapse: true,
         tableData: Array(20).fill(item),
         formInline: {
-          user: '',
-          region: ''
+          source: '',
+          dist: ''
         }
       }
     },
     methods: {
-      onSubmit () {
+      srcClick () {
         const folder = fileDialog({
           properties: ['openDirectory'],
           defaultPath: __dirname
         })
-        console.log(folder)
+        if (folder) {
+          this.formInline.source = folder
+        }
+        this.$refs.execBtn.$el.focus()
+      },
+      distClick () {
+        const folder = fileDialog({
+          properties: ['openDirectory'],
+          defaultPath: __dirname
+        })
+        if (folder) {
+          this.formInline.dist = folder
+        }
+        this.$refs.execBtn.$el.focus()
+      },
+      onSubmit () {
       }
     }
   }
