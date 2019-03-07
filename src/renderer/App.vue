@@ -3,16 +3,16 @@
     <el-container>
       <el-menu default-active="1" :collapse="isCollapse">
         <el-menu-item index="1">
-          <i class="el-icon-upload" ></i>
+          <i class="el-icon-menu" ></i>
         </el-menu-item>
       </el-menu>
 
       <el-container>
         <el-main>
           <el-form :model="formInline" label-width="120px">
-            <el-row style="margin-bottom:24px;padding-bottom:24px;border-bottom: solid 1px #ddd;">
+            <el-row style="">
               <el-button-group >
-                <el-button type="danger" icon="el-icon-circle-check" ref="execBtn" @keydown="onSubmit" >Run</el-button>
+                <el-button type="default" icon="el-icon-circle-check" ref="execBtn" @keydown="onSubmit" >Run</el-button>
               </el-button-group>
             </el-row>
             <el-form-item label="Source Folder" >
@@ -23,11 +23,12 @@
             </el-form-item>
           </el-form>        
           <el-table :data="tableData">
-            <el-table-column prop="date" label="Date" width="140">
+            <el-table-column prop="processStatus" label="Status">
+                <i class="el-icon-circle-check-outline" ></i>
             </el-table-column>
-            <el-table-column prop="name" label="Name" width="120">
+            <el-table-column prop="srcName" label="Source" width="120">
             </el-table-column>
-            <el-table-column prop="address" label="Address">
+            <el-table-column prop="distName" label="Translated File" width="120">
             </el-table-column>
           </el-table>
         </el-main>
@@ -36,7 +37,28 @@
   </div>
 </template>
 
-<style>
+<style lang="scss">
+@import 'assets/css/custom.scss';
+
+/* Main continer */
+.el-main {
+  .el-form {
+    .el-row {
+      margin-bottom: 24px;
+      padding-bottom: 24px;
+      border-bottom: solid 1px #ddd;
+    }
+  }
+}
+
+/* Side bar*/
+.el-menu {
+  background-color: #444;
+  color: #303133;
+
+}
+
+
 </style>
 
 <script>
@@ -46,9 +68,9 @@
     name: 'lr-translate',
     data: function () {
       const item = {
-        date: '2016-05-02',
-        name: 'Tom',
-        address: 'No. 189, Grove St, Los Angeles'
+        srcName: 'Tom',
+        distName: 'Tom',
+        processStatus: 'No. 189, Grove St, Los Angeles'
       }
       return {
         labelPosition: 'left',

@@ -1,0 +1,15 @@
+/* Refer base valuable here
+* node_modules/element-ui/packages/theme-chalk/src/common/var.scss
+-------------------------- */
+
+/* Base
+-------------------------- */
+$--color-primary: #e1e1e1 !default;
+$menu_background: #444;
+
+/* Link
+-------------------------- */
+$--link-color: $--color-primary !default;
+$--link-hover-color: $--color-primary !default;
+
+@import '~element-ui/lib/theme-chalk/index.css'

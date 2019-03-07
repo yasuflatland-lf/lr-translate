@@ -1,0 +1,14 @@
+
+@import 'assets/css/element-variables.scss';
+
+body {
+    margin:0;
+}
+
+.el-button, .el-menu-item {
+    &:focus, &:hover, &.is-active {
+        color:$menu_background;
+        background-color: $--color-primary;
+        border-color: $--color-primary;
+    }
+}
