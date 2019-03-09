@@ -62,7 +62,7 @@
 </style>
 
 <script>
-  import {fileDialog} from './discaccess'
+  import {fileDialog, listAll} from './discaccess'
 
   export default {
     name: 'lr-translate',
@@ -90,6 +90,7 @@
         })
         if (folder) {
           this.formInline.source = folder
+          listAll(folder, true, '.md')
         }
         this.$refs.execBtn.$el.focus()
       },
