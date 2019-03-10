@@ -2,7 +2,13 @@ const path = require('path')
 const klawSync = require('klaw-sync')
 
 const { dialog } = require('electron').remote
-console.log(dialog)
+
+/**
+ * fileDialog
+ * Open file dialog.
+ *
+ * @param {options} str - The root directory to start traverse files.
+ */
 
 export function fileDialog (options) {
   const res = dialog.showOpenDialog(options)
@@ -14,6 +20,14 @@ export function fileDialog (options) {
   return p || null
 }
 
+/**
+ * listAll
+ * Traverse all directory and list the file names.
+ *
+ * @param {dir} str - The root directory to start traverse files.
+ * @param {nodir} str - To omit directories, true or false
+ * @param {extname} str - extention name, e.g. '.md'
+ */
 export function listAll (dir, nodir, extname) {
   const filterFn = item => {
     const ext = path.extname(item.path)
