@@ -8,19 +8,29 @@
       </el-menu>
 
       <el-main>
-        <el-form :model="formInline" label-width="120px">
+        <el-form :model="formInline" >
           <el-row>
+            <el-form-item >
+              <el-col :span="2" >
+                <el-button type="default" icon="el-icon-document" ref="execBtn" @click="srcClick" ></el-button>
+              </el-col>
+              <el-col :span="21" >
+                <el-input v-model="formInline.source" placeholder="Source Folder" ></el-input>
+              </el-col>
+            </el-form-item>
+            <el-form-item>
+              <el-col :span="2" >
+                <el-button type="default" icon="el-icon-document" ref="execBtn" @click="distClick" ></el-button>
+              </el-col>
+              <el-col :span="21" >
+                <el-input v-model="formInline.dist" placeholder="Translated Folder" ></el-input>
+              </el-col>
+            </el-form-item>
             <el-button-group >
-              <el-button type="default" icon="el-icon-circle-check" ref="execBtn" @keydown="onSubmit" >Run</el-button>
+              <el-col :span="2" >
+                <el-button type="danger" icon="el-icon-caret-right" ref="execBtn" @keydown="onSubmit" ></el-button>
+              </el-col>
             </el-button-group>
-          </el-row>
-          <el-row>
-            <el-form-item label="Source Folder" >
-              <el-input v-model="formInline.source" placeholder="Translated Folder" @focus="srcClick" ></el-input>
-            </el-form-item>
-            <el-form-item label="Translated Folder">
-              <el-input v-model="formInline.dist" placeholder="Translated Folder" @focus="distClick"></el-input>
-            </el-form-item>
           </el-row>
         </el-form>
         <!-- Target list -->
@@ -69,7 +79,7 @@
       return {
         isCollapse: true,
         labelPosition: 'left',
-        tableData: Array(10).fill(item),
+        tableData: Array(1).fill(item),
         formInline: {
           source: '',
           dist: ''
