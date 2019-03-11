@@ -8,7 +8,6 @@
       </el-menu>
 
       <el-main>
-
         <el-form :model="formInline">
           <el-row class="error" v-if="this.errors.length">
             <el-alert title="Error" type="error" show-icon>
@@ -51,6 +50,10 @@
 <style lang="scss">
 @import 'assets/css/custom.scss';
 
+#app {
+  min-width: 900px;
+  min-height: 500px;
+}
 /* Main continer */
 .el-main {
   .el-form {

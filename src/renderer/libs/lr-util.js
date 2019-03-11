@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 /**
  * fileList
  * @param {fileList} array - fileList by klawSync
