@@ -1,3 +1,4 @@
+const fs = require('fs-extra')
 const path = require('path')
 const klawSync = require('klaw-sync')
 
@@ -7,9 +8,8 @@ const { dialog } = require('electron').remote
  * fileDialog
  * Open file dialog.
  *
- * @param {options} str - The root directory to start traverse files.
+ * @param {options} str see https://electronjs.org/docs/api/dialog for the details.
  */
-
 export function fileDialog (options) {
   const res = dialog.showOpenDialog(options)
 
@@ -40,4 +40,25 @@ export function listAll (dir, nodir, extname) {
       traverseAll: true,
       filter: filterFn
     }))
+}
+
+/**
+ * copyFiles
+ *
+ * @param {srcFilePath} str - Source file path
+ * @param {distDir} str - Destination file directory
+ */
+export async function copyFiles (srcFilePath, distDir) {
+  const fileName = path.basename(srcFilePath)
+  const distFilePath = path.format({
+    root: '/ignored',
+    dir: distDir,
+    base: fileName
+  })
+
+  await fs.copy(srcFilePath, distFilePath, err => {
+    if (err) return console.error('failed to copy : ' + err)
+
+    console.log('Copied : ' + distFilePath)
+  })
 }

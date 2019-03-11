@@ -8,27 +8,35 @@
       </el-menu>
 
       <el-main>
-        <el-form :model="formInline" >
-          <el-row>
+
+        <el-form :model="formInline">
+          <el-row class="error" v-if="this.errors.length">
+            <el-alert title="Error" type="error" show-icon>
+              <ul>
+                <li v-for="error in this.errors">{{ error }}</li>
+              </ul>
+            </el-alert>
+          </el-row>
+          <el-row class="main">
             <el-form-item >
               <el-col :span="2" >
                 <el-button class="btn-folder" type="default" icon="el-icon-document" ref="execBtn" @click="srcClick" ></el-button>
               </el-col>
-              <el-col :span="21" >
-                <el-input v-model="formInline.source" placeholder="Source Folder" ></el-input>
+              <el-col :span="22" >
+                <el-input v-model="formInline.sourceDir" placeholder="Source Folder" ></el-input>
               </el-col>
             </el-form-item>
             <el-form-item>
               <el-col :span="2" >
                 <el-button class="btn-folder" type="default" icon="el-icon-document" ref="execBtn" @click="distClick" ></el-button>
               </el-col>
-              <el-col :span="21" >
-                <el-input v-model="formInline.dist" placeholder="Translated Folder" ></el-input>
+              <el-col :span="22" >
+                <el-input v-model="formInline.distDir" placeholder="Translated Folder" ></el-input>
               </el-col>
             </el-form-item>
             <el-button-group >
               <el-col :span="2" >
-                <el-button type="danger" icon="el-icon-caret-right" ref="execBtn" @keydown="onSubmit" ></el-button>
+                <el-button type="danger" icon="el-icon-caret-right" ref="execBtn"  @click="execTranslation" ></el-button>
               </el-col>
             </el-button-group>
           </el-row>
@@ -47,9 +55,15 @@
 .el-main {
   .el-form {
     .el-row {
-      margin-bottom: 24px;
-      padding-bottom: 24px;
-      border-bottom: solid 1px #ddd;
+        &.main {
+          margin-bottom: 24px;
+          padding-bottom: 24px;
+          border-bottom: solid 1px #ddd;
+        }
+        &.error {
+          margin-bottom: 12px;
+          padding-bottom: 12px;
+        }
     }
   }
 }
@@ -62,7 +76,7 @@
 </style>
 
 <script>
-  import {fileDialog, listAll} from './discaccess'
+  import {fileDialog, listAll} from './libs/lr-fs'
   import TargetTable from './components/TargetTable.vue'
 
   export default {
@@ -79,10 +93,11 @@
       return {
         isCollapse: true,
         labelPosition: 'left',
-        tableData: Array(1).fill(item),
+        tableData: Array(30).fill(item),
+        errors: [],
         formInline: {
-          source: '',
-          dist: ''
+          sourceDir: null,
+          distDir: null
         }
       }
     },
@@ -93,7 +108,7 @@
           defaultPath: __dirname
         })
         if (folder) {
-          this.formInline.source = folder
+          this.formInline.sourceDir = folder
           listAll(folder, true, '.md')
         }
       },
@@ -103,10 +118,20 @@
           defaultPath: __dirname
         })
         if (folder) {
-          this.formInline.dist = folder
+          this.formInline.distDir = folder
         }
       },
-      onSubmit () {
+      execTranslation () {
+        console.log('in')
+        this.errors = []
+
+        if (!this.formInline.sourceDir) {
+          this.errors.push('Source path is required.')
+        }
+
+        if (!this.formInline.distDir) {
+          this.errors.push('Distination directory path is required.')
+        }
       }
     }
   }
