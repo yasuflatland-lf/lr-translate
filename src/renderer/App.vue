@@ -105,18 +105,22 @@
     },
     methods: {
       srcClick () {
+        let opendir = (this.formInline.sourceDir) ? (this.formInline.sourceDir) : __dirname
+
         const folder = fileDialog({
           properties: ['openDirectory'],
-          defaultPath: __dirname
+          defaultPath: opendir
         })
         if (folder) {
           this.formInline.sourceDir = folder
         }
       },
       distClick () {
+        let opendir = (this.formInline.distDir) ? (this.formInline.distDir) : __dirname
+
         const folder = fileDialog({
           properties: ['openDirectory'],
-          defaultPath: __dirname
+          defaultPath: opendir
         })
         if (folder) {
           this.formInline.distDir = folder

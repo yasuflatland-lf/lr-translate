@@ -1,11 +1,11 @@
 <template>
 	<el-table :data="this.items">
-		<el-table-column prop="processStatus" label="Status">
-			<i class="el-icon-circle-check-outline"></i>
+		<el-table-column prop="processStatus" label="Status" width="60">
+			<i class="el-icon-circle-check-outline" ></i>
 		</el-table-column>
-		<el-table-column prop="srcName" label="Source" width="120">
+		<el-table-column prop="srcName" label="Source" >
 		</el-table-column>
-		<el-table-column prop="distName" label="Translated File" width="120">
+		<el-table-column prop="distName" label="Translated File" >
 		</el-table-column>
 	</el-table>
 </template>
