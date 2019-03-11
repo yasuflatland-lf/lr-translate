@@ -12,7 +12,7 @@
           <el-row>
             <el-form-item >
               <el-col :span="2" >
-                <el-button type="default" icon="el-icon-document" ref="execBtn" @click="srcClick" ></el-button>
+                <el-button class="btn-folder" type="default" icon="el-icon-document" ref="execBtn" @click="srcClick" ></el-button>
               </el-col>
               <el-col :span="21" >
                 <el-input v-model="formInline.source" placeholder="Source Folder" ></el-input>
@@ -20,7 +20,7 @@
             </el-form-item>
             <el-form-item>
               <el-col :span="2" >
-                <el-button type="default" icon="el-icon-document" ref="execBtn" @click="distClick" ></el-button>
+                <el-button class="btn-folder" type="default" icon="el-icon-document" ref="execBtn" @click="distClick" ></el-button>
               </el-col>
               <el-col :span="21" >
                 <el-input v-model="formInline.dist" placeholder="Translated Folder" ></el-input>
@@ -96,7 +96,6 @@
           this.formInline.source = folder
           listAll(folder, true, '.md')
         }
-        this.$refs.execBtn.$el.focus()
       },
       distClick () {
         const folder = fileDialog({
@@ -106,7 +105,6 @@
         if (folder) {
           this.formInline.dist = folder
         }
-        this.$refs.execBtn.$el.focus()
       },
       onSubmit () {
       }

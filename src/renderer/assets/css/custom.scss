@@ -5,10 +5,19 @@ body {
     margin:0;
 }
 
-.el-button, .el-menu-item {
+.el-menu-item {
     &:focus, &:hover, &.is-active {
         color:$menu_background;
         background-color: $--color-primary;
         border-color: $--color-primary;
+    }
+}
+.el-button {
+    &--default {
+        &:focus, &:hover, &.is-active {
+            color:$menu_background;
+            background-color: $--color-primary;
+            border-color: $--color-primary;
+        }
     }
 }
