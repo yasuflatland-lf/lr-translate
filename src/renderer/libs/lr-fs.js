@@ -26,7 +26,8 @@ export function fileDialog (options) {
  *
  * @param {dir} str - The root directory to start traverse files.
  * @param {nodir} str - To omit directories, true or false
- * @param {extname} str - extention name, e.g. '.md'
+ * @param {extname} str - file extention name, e.g. '.md'
+ * @returns {Array} - file list of klawSync
  */
 export function listAll (dir, nodir, extname) {
   const filterFn = item => {
@@ -34,12 +35,12 @@ export function listAll (dir, nodir, extname) {
     return ext === extname
   }
 
-  console.log(klawSync(dir,
+  return klawSync(dir,
     {
       nodir: nodir,
       traverseAll: true,
       filter: filterFn
-    }))
+    })
 }
 
 /**

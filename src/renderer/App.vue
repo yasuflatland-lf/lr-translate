@@ -76,7 +76,11 @@
 </style>
 
 <script>
-  import {fileDialog, listAll} from './libs/lr-fs'
+  import {
+    fileDialog,
+    listAll} from './libs/lr-fs'
+  import {
+    fileList} from './libs/lr-util'
   import TargetTable from './components/TargetTable.vue'
 
   export default {
@@ -85,15 +89,10 @@
       'target-table': TargetTable
     },
     data: function () {
-      const item = {
-        srcName: 'Tom',
-        distName: 'Tom',
-        processStatus: 'No. 189, Grove St, Los Angeles'
-      }
       return {
         isCollapse: true,
         labelPosition: 'left',
-        tableData: Array(30).fill(item),
+        tableData: [],
         errors: [],
         formInline: {
           sourceDir: null,
@@ -109,7 +108,6 @@
         })
         if (folder) {
           this.formInline.sourceDir = folder
-          listAll(folder, true, '.md')
         }
       },
       distClick () {
@@ -122,7 +120,6 @@
         }
       },
       execTranslation () {
-        console.log('in')
         this.errors = []
 
         if (!this.formInline.sourceDir) {
@@ -132,6 +129,13 @@
         if (!this.formInline.distDir) {
           this.errors.push('Distination directory path is required.')
         }
+
+        if (this.errors.length) {
+          return
+        }
+
+        const orgList = listAll(this.formInline.sourceDir, true, '.md')
+        this.tableData = fileList(orgList, this.formInline.distDir)
       }
     }
   }

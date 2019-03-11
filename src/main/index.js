@@ -16,6 +16,13 @@ const winURL = process.env.NODE_ENV === 'development'
   : `file://${__dirname}/index.html`
 
 function createWindow () {
+  if (process.env.NODE_ENV === 'production') {
+    var shouldQuit = app.makeSingleInstance((argv, workingDirectory) => {})
+    if (shouldQuit) {
+      app.quit()
+    }
+  }
+
   /**
    * Initial window options
    */
