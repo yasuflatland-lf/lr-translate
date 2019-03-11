@@ -1,5 +1,5 @@
 <template>
-	<el-table :data="tableData">
+	<el-table :data="this.items">
 		<el-table-column prop="processStatus" label="Status">
 			<i class="el-icon-circle-check-outline"></i>
 		</el-table-column>
@@ -17,20 +17,16 @@
 <script>
 export default {
   name: 'target-table',
-  data: function () {
-    const item = {
-      srcName: 'Tom',
-      distName: 'Tom',
-      processStatus: 'No. 189, Grove St, Los Angeles'
+  props: {
+    items: {
+      type: Array,
+      required: true
     }
+  },
+  data: function () {
     return {
       labelPosition: 'left',
-      isCollapse: true,
-      tableData: Array(20).fill(item),
-      formInline: {
-        source: '',
-        dist: ''
-      }
+      isCollapse: true
     }
   }
 }

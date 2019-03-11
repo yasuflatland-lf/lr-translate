@@ -7,27 +7,25 @@
         </el-menu-item>
       </el-menu>
 
-      <el-container>
-        <el-main>
-          <el-form :model="formInline" label-width="120px">
-            <el-row>
-              <el-button-group >
-                <el-button type="default" icon="el-icon-circle-check" ref="execBtn" @keydown="onSubmit" >Run</el-button>
-              </el-button-group>
-            </el-row>
-            <el-row>
-              <el-form-item label="Source Folder" >
-                <el-input v-model="formInline.source" placeholder="Translated Folder" @focus="srcClick" ></el-input>
-              </el-form-item>
-              <el-form-item label="Translated Folder">
-                <el-input v-model="formInline.dist" placeholder="Translated Folder" @focus="distClick"></el-input>
-              </el-form-item>
-            </el-row>
-          </el-form>
-          <!-- Target list -->
-          <target-table></target-table>
-        </el-main>
-      </el-container>
+      <el-main>
+        <el-form :model="formInline" label-width="120px">
+          <el-row>
+            <el-button-group >
+              <el-button type="default" icon="el-icon-circle-check" ref="execBtn" @keydown="onSubmit" >Run</el-button>
+            </el-button-group>
+          </el-row>
+          <el-row>
+            <el-form-item label="Source Folder" >
+              <el-input v-model="formInline.source" placeholder="Translated Folder" @focus="srcClick" ></el-input>
+            </el-form-item>
+            <el-form-item label="Translated Folder">
+              <el-input v-model="formInline.dist" placeholder="Translated Folder" @focus="distClick"></el-input>
+            </el-form-item>
+          </el-row>
+        </el-form>
+        <!-- Target list -->
+        <target-table :items="tableData"></target-table>
+      </el-main>
     </el-container>
   </div>
 </template>
@@ -50,7 +48,6 @@
 .el-menu {
   background-color: #444;
   color: #303133;
-
 }
 </style>
 
@@ -64,8 +61,15 @@
       'target-table': TargetTable
     },
     data: function () {
+      const item = {
+        srcName: 'Tom',
+        distName: 'Tom',
+        processStatus: 'No. 189, Grove St, Los Angeles'
+      }
       return {
         isCollapse: true,
+        labelPosition: 'left',
+        tableData: Array(10).fill(item),
         formInline: {
           source: '',
           dist: ''
