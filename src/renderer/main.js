@@ -8,6 +8,7 @@ import './assets/css/element-variables.scss'
 import App from './App'
 
 Vue.use(ElementUI, { lang })
+
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

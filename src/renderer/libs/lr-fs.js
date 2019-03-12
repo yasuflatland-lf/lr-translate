@@ -44,22 +44,50 @@ export function listAll (dir, nodir, extname) {
 }
 
 /**
- * copyFiles
+ * Copy File
  *
  * @param {srcFilePath} str - Source file path
- * @param {distDir} str - Destination file directory
+ * @param {distFilePath} str - Destination file directory
  */
-export async function copyFiles (srcFilePath, distDir) {
-  const fileName = path.basename(srcFilePath)
-  const distFilePath = path.format({
-    root: '/ignored',
-    dir: distDir,
-    base: fileName
-  })
-
-  await fs.copy(srcFilePath, distFilePath, err => {
+export function copyFile (srcFilePath, distFilePath) {
+  fs.copy(srcFilePath, distFilePath, err => {
     if (err) return console.error('failed to copy : ' + err)
-
-    console.log('Copied : ' + distFilePath)
   })
+}
+
+/**
+ * Create the destination file path
+ *
+ * @param {srcDir} str - Source directory
+ * @param {srcFilePath} str - Source File path
+ * @param {distDir} str - Destination directory
+ * @returns distDir + relative file path of srcFilePath from srcDir
+ */
+export function createDistFilePath (srcDir, srcFilePath, distDir) {
+  const relativePath = path.relative(srcDir, srcFilePath)
+  return path.resolve(distDir, relativePath)
+}
+
+/**
+ * Get Path List
+ *
+ * @param {sourceDir} str - Source directory
+ * @param {distDir} str - Destination directory
+ * @param {ext} str - target files' extention
+ */
+export function getPathList (sourceDir, distDir, ext) {
+  const orgList = listAll(sourceDir, true, ext)
+
+  const pathList = []
+  for (let i in orgList) {
+    const distPath = createDistFilePath(sourceDir, orgList[i].path, distDir)
+    const data = {
+      processStatus: 0,
+      srcName: orgList[i].path,
+      distName: distPath
+    }
+    pathList.push(data)
+  }
+
+  return pathList
 }

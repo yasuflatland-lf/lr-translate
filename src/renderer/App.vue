@@ -36,7 +36,7 @@
             </el-button-group>
           </el-row>
           <el-row class="error" v-if="this.errors.length">
-            <el-alert title="Error" type="error" show-icon closable>
+            <el-alert title="Error" type="error" :closable="false" show-icon>
               <ul>
                 <li v-for="error in this.errors">{{ error }}</li>
               </ul>
@@ -85,12 +85,8 @@
 </style>
 
 <script>
-  import {
-    fileDialog,
-    listAll} from './libs/lr-fs'
-  import {
-    fileList} from './libs/lr-util'
   import TargetTable from './components/TargetTable.vue'
+  const lrfs = require('./libs/lr-fs')
 
   export default {
     name: 'lr-translate',
@@ -104,35 +100,35 @@
         tableData: [],
         errors: [],
         formInline: {
-          sourceDir: null,
-          distDir: null
+          sourceDir: '/Users/yasuflatland/temp/damascus-document',
+          distDir: '/Users/yasuflatland/Downloads/aaaaa'
         }
       }
     },
     methods: {
-      srcClick () {
-        let opendir = (this.formInline.sourceDir) ? (this.formInline.sourceDir) : __dirname
+      openFolder (orgFolder) {
+        let opendir = (orgFolder) || __dirname
 
-        const folder = fileDialog({
+        return lrfs.fileDialog({
           properties: ['openDirectory'],
           defaultPath: opendir
         })
+      },
+      srcClick () {
+        const folder = this.openFolder(this.formInline.sourceDir)
+
         if (folder) {
           this.formInline.sourceDir = folder
         }
       },
       distClick () {
-        let opendir = (this.formInline.distDir) ? (this.formInline.distDir) : __dirname
+        const folder = this.openFolder(this.formInline.distDir)
 
-        const folder = fileDialog({
-          properties: ['openDirectory'],
-          defaultPath: opendir
-        })
         if (folder) {
           this.formInline.distDir = folder
         }
       },
-      execTranslation () {
+      validation () {
         this.errors = []
 
         if (!this.formInline.sourceDir) {
@@ -143,12 +139,33 @@
           this.errors.push('Distination directory path is required.')
         }
 
-        if (this.errors.length) {
+        return (!this.errors.length)
+      },
+      copyFiles (pathList) {
+        pathList.forEach((pathInfo, index) => {
+          lrfs.copyFile(pathInfo.srcName, pathInfo.distName)
+        })
+      },
+      execTranslation () {
+        if (!this.validation()) {
           return
         }
 
-        const orgList = listAll(this.formInline.sourceDir, true, '.md')
-        this.tableData = fileList(orgList, this.formInline.distDir)
+        const pathList = lrfs.getPathList(
+          this.formInline.sourceDir,
+          this.formInline.distDir,
+          '.md'
+        )
+
+        this.copyFiles(pathList)
+
+        this.tableData = pathList
+
+        // this.tableData.filter(function (item, index) {
+        //   console.log(item)
+        //   return false
+        // })
+        // lrutil.translate(null, null, null)
       }
     }
   }
