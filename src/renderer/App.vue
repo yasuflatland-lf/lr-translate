@@ -5,17 +5,13 @@
         <el-menu-item index="1">
           <i class="el-icon-menu" ></i>
         </el-menu-item>
+        <el-menu-item index="2">
+          <i class="el-icon-setting"></i>
+        </el-menu-item>
       </el-menu>
 
       <el-main>
         <el-form :model="formInline">
-          <el-row class="error" v-if="this.errors.length">
-            <el-alert title="Error" type="error" show-icon>
-              <ul>
-                <li v-for="error in this.errors">{{ error }}</li>
-              </ul>
-            </el-alert>
-          </el-row>
           <el-row class="main">
             <el-form-item >
               <el-col :span="2" >
@@ -39,6 +35,13 @@
               </el-col>
             </el-button-group>
           </el-row>
+          <el-row class="error" v-if="this.errors.length">
+            <el-alert title="Error" type="error" show-icon closable>
+              <ul>
+                <li v-for="error in this.errors">{{ error }}</li>
+              </ul>
+            </el-alert>
+          </el-row>
         </el-form>
         <!-- Target list -->
         <target-table :items="tableData"></target-table>
@@ -51,8 +54,11 @@
 @import 'assets/css/custom.scss';
 
 #app {
+  display: flex;
   min-width: 900px;
   min-height: 500px;
+  flex-direction: column;
+  height: 100vh;
 }
 /* Main continer */
 .el-main {
