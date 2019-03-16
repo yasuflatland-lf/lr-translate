@@ -87,6 +87,8 @@
 <script>
   import TargetTable from './components/TargetTable.vue'
   const lrfs = require('./libs/lr-fs')
+  const lrutil = require('./libs/lr-util')
+  const fs = require('fs-extra')
 
   export default {
     name: 'lr-translate',
@@ -100,8 +102,8 @@
         tableData: [],
         errors: [],
         formInline: {
-          sourceDir: '/Users/yasuflatland/temp/damascus-document',
-          distDir: '/Users/yasuflatland/Downloads/aaaaa'
+          sourceDir: null,
+          distDir: null
         }
       }
     },
@@ -161,11 +163,14 @@
 
         this.tableData = pathList
 
-        // this.tableData.filter(function (item, index) {
-        //   console.log(item)
-        //   return false
-        // })
-        // lrutil.translate(null, null, null)
+        this.tableData.forEach((val, index) => {
+          fs.readFile(val.distName, 'utf8', function (err, contents) {
+            if (err) {
+              return console.error(err)
+            }
+            lrutil.translate(contents, 'en', 'ja')
+          })
+        })
       }
     }
   }
