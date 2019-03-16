@@ -164,7 +164,7 @@
         this.tableData = pathList
 
         this.tableData.forEach((val, index) => {
-          fs.readFile(val.distName, 'utf8', function (err, contents) {
+          fs.readFile(val.distName, 'utf8', (err, contents) => {
             if (err) {
               return console.error(err)
             }
