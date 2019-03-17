@@ -1,7 +1,12 @@
 <template>
 	<el-table :data="this.items">
 		<el-table-column prop="processStatus" label="Status" width="60">
-			<i class="el-icon-circle-check-outline" ></i>
+      <template slot-scope="scope">
+  			<i v-if="scope.row.processStatus === -1" class="el-icon-error" ></i>
+  			<i v-if="scope.row.processStatus === 0" class="el-icon-circle-check-outline" ></i>
+  			<i v-if="scope.row.processStatus === 1" class="el-icon-loading" ></i>
+  			<i v-if="scope.row.processStatus === 2" class="el-icon-success" ></i>
+      </template>
 		</el-table-column>
 		<el-table-column prop="srcName" label="Source" >
 		</el-table-column>

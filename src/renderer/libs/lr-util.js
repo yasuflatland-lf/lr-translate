@@ -15,31 +15,22 @@ const apiTranslate = 'api/translate'
 export async function translate (q, source, target) {
   const targetPath = translateBasePath + apiTranslate
 
-  // return axios.post(targetPath, {
-  //   q: q,
-  //   source: source,
-  //   target: target
-  // })
-  //   .then(function (response) {
-  //     console.log(response)
-  //   })
-  //   .catch(function (error) {
-  //     console.log(error)
-  //   })
-
   const data = {
     q: q,
     source: source,
     target: target
   }
 
-  return axios({
-    method: 'post',
-    url: targetPath,
-    data: data
-  }).then(function (response) {
-    console.log(response)
-  }).catch(function (error) {
-    console.log(error)
-  })
+  try {
+    const res = await axios({
+      method: 'post',
+      url: targetPath,
+      data: data
+    })
+
+    return res.data
+  } catch (error) {
+    console.error(error)
+    return error
+  }
 }

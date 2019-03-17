@@ -145,7 +145,7 @@
       },
       copyFiles (pathList) {
         pathList.forEach((pathInfo, index) => {
-          lrfs.copyFile(pathInfo.srcName, pathInfo.distName)
+          fs.copySync(pathInfo.srcName, pathInfo.distName)
         })
       },
       execTranslation () {
@@ -164,12 +164,38 @@
         this.tableData = pathList
 
         this.tableData.forEach((val, index) => {
-          fs.readFile(val.distName, 'utf8', (err, contents) => {
-            if (err) {
-              return console.error(err)
-            }
-            lrutil.translate(contents, 'en', 'ja')
+          this.$set(this.tableData, index, {
+            processStatus: 1,
+            srcName: val.srcName,
+            distName: val.distName
           })
+
+          try {
+            const contents = fs.readFileSync(val.distName, 'utf8')
+            const translatedData = lrutil.translate(contents, 'en', 'ja')
+
+            translatedData.then((data) => {
+              if (data.hasOwnProperty(data.err)) {
+                this.$set(this.tableData, index, {
+                  processStatus: -1,
+                  srcName: val.srcName,
+                  distName: val.distName
+                })
+
+                return
+              }
+
+              fs.writeFileSync(val.distName, data.translated, {encoding: 'utf8'})
+
+              this.$set(this.tableData, index, {
+                processStatus: 2,
+                srcName: val.srcName,
+                distName: val.distName
+              })
+            })
+          } catch (err) {
+            console.error(err)
+          }
         })
       }
     }

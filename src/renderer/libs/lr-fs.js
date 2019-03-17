@@ -1,4 +1,3 @@
-const fs = require('fs-extra')
 const path = require('path')
 const klawSync = require('klaw-sync')
 
@@ -41,18 +40,6 @@ export function listAll (dir, nodir, extname) {
       traverseAll: true,
       filter: filterFn
     })
-}
-
-/**
- * Copy File
- *
- * @param {srcFilePath} str - Source file path
- * @param {distFilePath} str - Destination file directory
- */
-export function copyFile (srcFilePath, distFilePath) {
-  fs.copy(srcFilePath, distFilePath, err => {
-    if (err) return console.error('failed to copy : ' + err)
-  })
 }
 
 /**
