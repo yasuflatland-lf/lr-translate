@@ -64,7 +64,8 @@
     "marked": "^0.6.1",
     "path": "^0.12.7",
     "vue": "^2.5.16",
-    "vue-axios": "^2.1.4"
+    "vue-axios": "^2.1.4",
+    "vue-router": "^3.0.2"
   },
   "devDependencies": {
     "@vue/test-utils": "^1.0.0-beta.29",
