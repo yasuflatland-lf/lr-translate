@@ -16,7 +16,7 @@
 </template>
 
 <style lang="scss">
-	@import '../assets/css/custom.scss';
+	@import '@/assets/css/custom.scss';
 </style>
 
 <script>
