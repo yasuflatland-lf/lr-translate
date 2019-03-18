@@ -20,7 +20,7 @@
         </el-form-item>
         <el-button-group >
           <el-col :span="2" >
-            <el-button type="danger" icon="el-icon-caret-right" ref="execBtn"  @click="execTranslation" ></el-button>
+            <el-button type="danger" icon="el-icon-caret-right" ref="execBtn"  @click="execTranslation" >Run</el-button>
           </el-col>
         </el-button-group>
       </el-row>
@@ -36,40 +36,6 @@
     <target-table :items="tableData"></target-table>
   </el-main>
 </template>
-
-<style lang="scss">
-@import '@/assets/css/custom.scss';
-
-#app {
-  display: flex;
-  min-width: 900px;
-  min-height: 500px;
-  flex-direction: column;
-  height: 100vh;
-}
-/* Main continer */
-.el-main {
-  .el-form {
-    .el-row {
-        &.main {
-          margin-bottom: 24px;
-          padding-bottom: 24px;
-          border-bottom: solid 1px #ddd;
-        }
-        &.error {
-          margin-bottom: 12px;
-          padding-bottom: 12px;
-        }
-    }
-  }
-}
-
-/* Side bar*/
-.el-menu {
-  background-color: #444;
-  color: #303133;
-}
-</style>
 
 <script>
   import TargetTable from './TargetTable.vue'

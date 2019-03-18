@@ -49,6 +49,7 @@
 
 /* Side bar*/
 .el-menu {
+  border: none;
   background-color: #444;
   color: #303133;
 }
