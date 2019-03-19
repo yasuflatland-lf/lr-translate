@@ -11,14 +11,17 @@ const apiTranslate = 'api/translate'
  * @param {q} str - Translation strings
  * @param {source} str - Original language, en, ja, etc.
  * @param {target} str - Target language, en, ja, etc.
+ * @param {fmt} str - Target format, either html or text
  */
-export async function translate (q, source, target) {
+export async function translate (q, source, target, fmt) {
   const targetPath = translateBasePath + apiTranslate
 
+  const format = fmt || 'text'
   const data = {
     q: q,
     source: source,
-    target: target
+    target: target,
+    format: format
   }
 
   try {

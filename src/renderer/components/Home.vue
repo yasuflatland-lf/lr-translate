@@ -19,8 +19,11 @@
           </el-col>
         </el-form-item>
         <el-button-group >
-          <el-col :span="2" >
+          <el-col :span="10" >
             <el-button type="danger" icon="el-icon-caret-right" ref="execBtn"  @click="execTranslation" >Run</el-button>
+          </el-col>
+          <el-col :span="5" >
+            <el-button type="default" icon="el-icon-caret-right" ref="execBtnTemp"  @click="testExec" >Parse Test</el-button>
           </el-col>
         </el-button-group>
       </el-row>
@@ -41,6 +44,7 @@
   import TargetTable from './TargetTable.vue'
   const lrfs = require('@/libs/lr-fs')
   const lrutil = require('@/libs/lr-util')
+  const lrparsemd = require('@/libs/lr-parse-md')
   const fs = require('fs-extra')
 
   export default {
@@ -99,6 +103,40 @@
       copyFiles (pathList) {
         pathList.forEach((pathInfo, index) => {
           fs.copySync(pathInfo.srcName, pathInfo.distName)
+        })
+      },
+      testExec () {
+        if (!this.validation()) {
+          return
+        }
+
+        const pathList = lrfs.getPathList(
+          this.formInline.sourceDir,
+          this.formInline.distDir,
+          '.md'
+        )
+
+        this.copyFiles(pathList)
+
+        this.tableData = pathList
+
+        this.tableData.forEach((val, index) => {
+          try {
+            const contents = fs.readFileSync(val.distName, 'utf8')
+            const translated = lrparsemd.parse(contents, 'en', 'ja', 'html')
+
+            translated.then((data) => {
+              console.log(data)
+            })
+            // fs.writeFileSync(val.distName, translated, {encoding: 'utf8'})
+            // this.$set(this.tableData, index, {
+            //   processStatus: 2,
+            //   srcName: val.srcName,
+            //   distName: val.distName
+            // })
+          } catch (err) {
+            console.error(err)
+          }
         })
       },
       execTranslation () {
